@@ -1,0 +1,23 @@
+.divface
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+}
+
+.face td
+{
+    height: 33px;
+    width: 33px;
+    border: #868686 solid;
+}
+
+#faceg, #facew, #faceb
+{
+    display: inline-block;
+}
+
+.decal
+{
+    padding-left: 270px;
+}
