@@ -1,12 +1,16 @@
 /**
  * Created by Simon on 23/02/2016.
  */
+
 function  newPiece(colorX, colorY, colorZ) {
     return [colorX, colorY, colorZ]
 }
+
+
 function  clonePiece(piece) {
     return piece.slice();
 }
+
 
 function newCube(n) {
     // TODO: check n
@@ -32,6 +36,7 @@ function newCube(n) {
     }
     return cube;
 }
+
 
 function cloneCube(cube) {
     var n = cube.length;
@@ -59,6 +64,7 @@ function flipPiece(piece, axis) {
             return newPiece(piece[1], piece[0], piece[2]);
     }
 }
+
 
 function flipCube(cube, axis, slice, clockwise) {
     var flipped = cloneCube(cube);
@@ -136,6 +142,7 @@ function getFace(cube, name) {
     return face;
 }
 
+
 function printFace(face, colors) {
     var table = "<table class='face'>";
     for(var i = 0; i < face.length; i++) {
@@ -146,18 +153,18 @@ function printFace(face, colors) {
         table += "</tr>";
     }
     table += "</table>";
-
     return table;
 }
 
+
 function printCube(mycube, colors) {
     var div = "<div class='cube'>\n";
-    div += "<div id='faceU' class='face-decal'>" + printFace(getFace(mycube, 'U'), colors) + "</div>\n"
-    div += "<div id='faceL' class='face-inline'>" + printFace(getFace(mycube, 'L'), colors) + "</div>\n"
-    div += "<div id='faceF' class='face-inline'>" + printFace(getFace(mycube, 'F'), colors) + "</div>\n"
-    div += "<div id='faceR' class='face-inline'>" + printFace(getFace(mycube, 'R'), colors) + "</div>\n"
-    div += "<div id='faceB' class='face-inline'>" + printFace(getFace(mycube, 'B'), colors) + "</div>\n"
-    div += "<div id='faceD' class='face-decal'>" + printFace(getFace(mycube, 'D'), colors) + "</div>\n"
+    div += "<div class='face-decal'>" + printFace(getFace(mycube, 'U'), colors) + "</div>\n"
+    div += "<div class='face-inline'>" + printFace(getFace(mycube, 'L'), colors) + "</div>\n"
+    div += "<div class='face-inline'>" + printFace(getFace(mycube, 'F'), colors) + "</div>\n"
+    div += "<div class='face-inline'>" + printFace(getFace(mycube, 'R'), colors) + "</div>\n"
+    div += "<div class='face-inline'>" + printFace(getFace(mycube, 'B'), colors) + "</div>\n"
+    div += "<div class='face-decal'>" + printFace(getFace(mycube, 'D'), colors) + "</div>\n"
     div += "</div>\n";
     return div;
 }
