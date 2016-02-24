@@ -3,13 +3,12 @@
  * scripts test
  */
 
-var mycube = newCube();
+var n = 3;
+var mycube = newCube(n);
+mycube = flipCube(mycube, 0, n-1);
+mycube = flipCube(mycube, 1, n-1, false);
+mycube = flipNCube(mycube, 2, 0, true, 2);
 
-mycube = flipNCube(mycube, 'y', 2, 3);
+var colors = {U:'white', L:'green', F:'red', R:'blue', B:'orange', D:'yellow'};
 
-document.getElementById('facew').innerHTML = printFace(getFace(mycube, 'z', 2));
-document.getElementById('facer').innerHTML = printFace(getFace(mycube, 'x', 2));
-document.getElementById('faceb').innerHTML = printFace(getFace(mycube, 'y', 2));
-document.getElementById('faceo').innerHTML = printFace(getFace(mycube, 'x', 0));
-document.getElementById('faceg').innerHTML = printFace(getFace(mycube, 'y', 0));
-document.getElementById('facey').innerHTML = printFace(getFace(mycube, 'z', 0));
+document.getElementById('cube').innerHTML = printCube(mycube, colors);

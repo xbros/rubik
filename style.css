@@ -1,23 +1,33 @@
-.divface
+.cube
 {
+    width: 500px;
     margin-left: auto;
     margin-right: auto;
-    width: 500px;
 }
 
-.face td
+.face-decal
 {
-    height: 33px;
-    width: 33px;
-    border: #868686 solid;
+    margin-left: 125px;
+    margin-bottom: 5px;
 }
 
-#faceg, #facew, #faceb
+.face-inline
 {
     display: inline-block;
 }
 
-.decal
+.face
 {
-    padding-left: 270px;
+    border-spacing: 0px;
+}
+
+.face td
+{
+    height: 32px;
+    width: 32px;
+    border: black solid 4px;
+    padding: 0px;
+    border-radius:3px;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
 }

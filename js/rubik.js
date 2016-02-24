@@ -1,139 +1,147 @@
 /**
  * Created by Simon on 23/02/2016.
  */
-function newPiece(colors) {
-    var object = {colorX:colors[0], colorY:colors[1], colorZ:colors[2]};
-    return object;
+function  newPiece(colorX, colorY, colorZ) {
+    return [colorX, colorY, colorZ]
+}
+function  clonePiece(piece) {
+    return piece.slice();
 }
 
-function clonePiece(piece) {
-    var clone =  newPiece([piece.colorX, piece.colorY, piece.colorZ]);
-    return clone;
-}
+function newCube(n) {
+    // TODO: check n
+    var colorX = Array(n);
+    colorX[0] = 'B';
+    colorX[n-1] = 'F';
+    var colorY = Array(n);
+    colorY[0] = 'L';
+    colorY[n-1] = 'R';
+    var colorZ = Array(n);
+    colorZ[0] = 'D';
+    colorZ[n-1] = 'U';
 
-function newCube() {
-    var cube = [];
-    for (var i=0; i<3; i++) {
-        cube[i] = [];
-        for (var j = 0; j < 3; j++) {
-            cube[i][j] = [null, null, null];
+    var cube = Array(n);
+    for (var i=0; i<n; i++) {
+        cube[i] = Array(n);
+        for (var j = 0; j < n; j++) {
+            cube[i][j] = Array(n);
+          for (var k = 0; k < n; k++) {
+              cube[i][j][k] = newPiece(colorX[i], colorY[j], colorZ[k]);
+            }
         }
     }
-    // bottom stage
-    var z = 'yellow';
-    var y = 'green';
-    cube[0][0][0] = newPiece(['orange',y,z]);
-    cube[1][0][0] = newPiece([null,y,z]);
-    cube[2][0][0] = newPiece(['red',y,z]);
-    y = null;
-    cube[0][1][0] = newPiece(['orange',y,z]);
-    cube[1][1][0] = newPiece([null,y,z]);
-    cube[2][1][0] = newPiece(['red',y,z]);
-    y = 'blue';
-    cube[0][2][0] = newPiece(['orange',y,z]);
-    cube[1][2][0] = newPiece([null,y,z]);
-    cube[2][2][0] = newPiece(['red',y,z]);
-
-    // middle stage
-    z = null;
-    y = 'green';
-    cube[0][0][1] = newPiece(['orange',y,z]);
-    cube[1][0][1] = newPiece([null,y,z]);
-    cube[2][0][1] = newPiece(['red',y,z]);
-    y = null;
-    cube[0][1][1] = newPiece(['orange',y,z]);
-    cube[1][1][1] = newPiece([null,y,z]);
-    cube[2][1][1] = newPiece(['red',y,z]);
-    y = 'blue';
-    cube[0][2][1] = newPiece(['orange',y,z]);
-    cube[1][2][1] = newPiece([null,y,z]);
-    cube[2][2][1] = newPiece(['red',y,z]);
-
-    // top stage
-    z = 'white';
-    y = 'green';
-    cube[0][0][2] = newPiece(['orange',y,z]);
-    cube[1][0][2] = newPiece([null,y,z]);
-    cube[2][0][2] = newPiece(['red',y,z]);
-    y = null;
-    cube[0][1][2] = newPiece(['orange',y,z]);
-    cube[1][1][2] = newPiece([null,y,z]);
-    cube[2][1][2] = newPiece(['red',y,z]);
-    y = 'blue';
-    cube[0][2][2] = newPiece(['orange',y,z]);
-    cube[1][2][2] = newPiece([null,y,z]);
-    cube[2][2][2] = newPiece(['red',y,z]);
-
     return cube;
 }
 
 function cloneCube(cube) {
-    var clone = [];
-
-    for (var i=0; i<cube.length; i++) {
-        clone[i] = [];
-        for (var j = 0; j < cube[i].length; j++) {
-            clone[i][j] = [];
-            for (var k = 0; k < cube[i][j].length; k++) {
-                clone[i][j][k] = clonePiece(cube[i][j][k]);
+    var n = cube.length;
+    var clone = Array(n);
+    for (var i=0; i<n; i++) {
+        clone[i] = Array(n);
+        for (var j = 0; j < n; j++) {
+            clone[i][j] = Array(n);
+          for (var k = 0; k < n; k++) {
+              clone[i][j][k] = clonePiece(cube[i][j][k]);
             }
         }
     }
     return clone;
 }
 
-function getFace(cube, axis, coord) {
-    var face = [];
-    var i;
-    var j;
+
+function flipPiece(piece, axis) {
     switch(axis) {
-        case 'x':
-            for(i = 0; i < 3; i++) {
-                face[i] = [];
-                for(j = 0; j< 3; j++ ) {
-                    if (coord==2)
-                        face[i][j] = cube[coord][j][2-i].colorX;
-                    else
-                        face[i][j] = cube[coord][j][i].colorX;
-                }
-            }
-            break;
+        case 0:
+            return newPiece(piece[0], piece[2], piece[1]);
+        case 1:
+            return newPiece(piece[2], piece[1], piece[0]);
+        case 2:
+            return newPiece(piece[1], piece[0], piece[2]);
+    }
+}
 
-        case 'y':
-            for(i = 0; i < 3; i++) {
-                face[i] = [];
-                for(j = 0; j< 3; j++ ) {
-                    if (coord==2)
-                        face[i][j] = cube[i][coord][2-j].colorY;
-                    else
-                        face[i][j] = cube[i][coord][j].colorY;
-                }
-            }
-            break;
+function flipCube(cube, axis, coord, clockwise) {
+    var flipped = cloneCube(cube);
+    var n = cube.length;
+    if (typeof(clockwise)=='undefined')
+        clockwise = true;
 
-        case 'z':
-            for(i = 0; i < 3; i++) {
-                face[i] = [];
-                for(j = 0; j< 3; j++ ) {
-                    if (coord==0)
-                        face[i][j] = cube[2-i][j][coord].colorZ;
+    for (var i=0; i<n; i++) {
+        for (var j=0; j<n; j++) {
+            switch(axis) {
+                case 0:
+                    if (clockwise)
+                        flipped[coord][j][-i+n-1] = flipPiece(cube[coord][i][j], axis);
                     else
-                        face[i][j] = cube[i][j][coord].colorZ;
-                }
+                        flipped[coord][-j+n-1][i] = flipPiece(cube[coord][i][j], axis);
+                    break;
+                case 1:
+                    if (clockwise)
+                        flipped[-j+n-1][coord][i] = flipPiece(cube[i][coord][j], axis);
+                    else
+                        flipped[j][coord][-i+n-1] = flipPiece(cube[i][coord][j], axis);
+                    break;
+                case 2:
+                    if (clockwise)
+                        flipped[j][-i+n-1][coord] = flipPiece(cube[i][j][coord], axis);
+                    else
+                        flipped[-j+n-1][i][coord] = flipPiece(cube[i][j][coord], axis);
+                    break;
             }
-            break;
+        }
+    }
+    return flipped;
+}
+
+
+function flipNCube(cube, axis, coord, clockwise, n) {
+    var flipped = cloneCube(cube);
+    for (var i=0; i<n; i++) {
+        flipped = flipCube(flipped, axis, coord, clockwise);
+    }
+    return flipped;
+}
+
+
+function getFace(cube, name) {
+    var n = cube.length;
+    var face = Array(n);
+
+    for(var i = 0; i < n; i++) {
+        face[i] = Array(n);
+        for(var j = 0; j< n; j++ ) {
+            switch(name) {
+                case 'B':
+                    face[i][j] = cube[0][n-1-j][n-1-i][0];
+                    break;
+                case 'F':
+                    face[i][j] = cube[n-1][j][n-1-i][0];
+                    break;
+                case 'L':
+                    face[i][j] = cube[j][0][n-1-i][1];
+                    break;
+                case 'R':
+                    face[i][j] = cube[n-1-j][n-1][n-1-i][1];
+                    break;
+                case 'D':
+                    face[i][j] = cube[n-1-i][j][0][2];
+                    break;
+                case 'U':
+                    face[i][j] = cube[i][j][n-1][2];
+                    break;
+            }
+        }
     }
 
     return face;
 }
 
-function printFace(face) {
-
+function printFace(face, colors) {
     var table = "<table class='face'>";
     for(var i = 0; i < face.length; i++) {
         table += "<tr>";
         for(var j = 0; j < face[i].length; j++) {
-            table += "<td style=\"background-color: " + face[i][j] + ";\"></td>"
+            table += "<td style=\"background-color: " + colors[face[i][j]] + ";\"></td>"
         }
         table += "</tr>";
     }
@@ -142,66 +150,14 @@ function printFace(face) {
     return table;
 }
 
-
-function flipPiece(piece, axis) {
-    var flipped = clonePiece(piece);
-    switch(axis) {
-        case 'x':
-            flipped.colorY = piece.colorZ;
-            flipped.colorZ = piece.colorY;
-            break;
-        case 'y':
-            flipped.colorZ = piece.colorX;
-            flipped.colorX = piece.colorZ;
-            break;
-        case 'z':
-            flipped.colorY = piece.colorX;
-            flipped.colorX = piece.colorY;
-            break;
-    }
-
-    return flipped;
+function printCube(mycube, colors) {
+    var div = "<div class='cube'>\n";
+    div += "<div id='faceU' class='face-decal'>" + printFace(getFace(mycube, 'U'), colors) + "</div>\n"
+    div += "<div id='faceL' class='face-inline'>" + printFace(getFace(mycube, 'L'), colors) + "</div>\n"
+    div += "<div id='faceF' class='face-inline'>" + printFace(getFace(mycube, 'F'), colors) + "</div>\n"
+    div += "<div id='faceR' class='face-inline'>" + printFace(getFace(mycube, 'R'), colors) + "</div>\n"
+    div += "<div id='faceB' class='face-inline'>" + printFace(getFace(mycube, 'B'), colors) + "</div>\n"
+    div += "<div id='faceD' class='face-decal'>" + printFace(getFace(mycube, 'D'), colors) + "</div>\n"
+    div += "</div>\n";
+    return div;
 }
-
-function flipCube(cube, axis, coord) {
-    var flipped = cloneCube(cube);
-
-    switch(axis) {
-        case 'x':
-            for (var i=0; i<3; i++) {
-                for (var j=0; j<3; j++) {
-                    flipped[coord][j][-(i-1)+1] = flipPiece(cube[coord][i][j], axis);
-                }
-            }
-            break;
-
-        case 'y':
-            for (var i=0; i<3; i++) {
-                for (var j=0; j<3; j++) {
-                    flipped[-(j-1)+1][coord][i] = flipPiece(cube[i][coord][j], axis);
-                }
-            }
-            break;
-
-        case 'z':
-            for (var i=0; i<3; i++) {
-                for (var j=0; j<3; j++) {
-                    flipped[j][-(i-1)+1][coord] = flipPiece(cube[i][j][coord], axis);
-                }
-            }
-            break;
-    }
-
-    return flipped;
-}
-
-
-function flipNCube(cube, axis, coord, n) {
-    var flipped = cloneCube(cube);
-    for (var i=0; i<n; i++) {
-        flipped = flipCube(flipped, axis, coord);
-    }
-    return flipped;
-}
-
-
