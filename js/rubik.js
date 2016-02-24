@@ -234,7 +234,7 @@ function printSettings() {
 function printMoveFace(mv) {
     var out = "<div class='rb-face'>";
     out += "<button onclick='move(&quot;" + mv + "&quot;);'>" + mv + "</button>";
-    out += "<button onclick='move(&quot;" + mv + "'&quot;);'>" + mv + "'</button>";
+    out += "<button onclick='move(&quot;" + mv + "&apos;&quot;);'>" + mv + "&apos;</button>";
     out += "</div>";
     return out;
 }
