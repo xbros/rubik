@@ -217,3 +217,59 @@ function shuffleCube(cube, n, moves) {
     }
     return shuffled;
 }
+
+
+function printSettings() {
+    var out = "<div class='rb-face'>";
+    out += "<button onclick='reset(n);'>Reset</button>";
+    out += "</div>";
+    out += "<div class='rb-face'></div>";
+    out += "<div class='rb-face'>";
+    out += "<button onclick='shuffle(nshuffle);'>Shuffle</button>"
+    out += "</div>";
+    return out;
+}
+
+
+function printMoveFace(mv) {
+    var out = "<div class='rb-face'>";
+    out += "<button onclick='move(&quot;" + mv + "&quot;);'>" + mv + "</button>";
+    out += "<button onclick='move(&quot;" + mv + "'&quot;);'>" + mv + "'</button>";
+    out += "</div>";
+    return out;
+}
+
+
+function printMoves() {
+    var out = "<div class='rb-face'></div>";
+    out += printMoveFace('U');
+    out += "<div>";
+    out += printMoveFace('L');
+    out += printMoveFace('F');
+    out += printMoveFace('R');
+    out += printMoveFace('B');
+    out += "</div>";
+    out += "<div class='rb-face'></div>";
+    out += printMoveFace('D');
+    return out;
+}
+
+
+function refresh() {
+    document.getElementById('cube').innerHTML = printCube(cube, colors);
+}
+
+function reset(n) {
+    cube = newCube(n);
+    refresh();
+}
+
+function shuffle(n) {
+    cube = shuffleCube(cube, 20);
+    refresh();
+}
+
+function move(mv) {
+    cube = moveCube(cube, mv);
+    refresh();
+}

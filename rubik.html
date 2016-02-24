@@ -7,53 +7,14 @@
 </head>
 <body style="background-color:black;">
 
-  <div id='settings' class="rb-settings">
-      <div class='rb-face'>
-          <button onclick="cube = newCube(n); refreshCube();">Reset</button>
-      </div>
-      <div class='rb-face'></div>
-      <div class='rb-face'>
-          <button onclick="cube = shuffleCube(cube, 20); refreshCube();">Shuffle</button>
-      </div>
-  </div>
+  <div id='settings' class="rb-settings"></div>
 
   <div id='cube' class="rb-cube"></div>
 
-  <div id='moves' class="rb-moves">
-      <div class='rb-face'></div>
-      <div class='rb-face'>
-          <button onclick="cube = moveCube(cube, 'U'); refreshCube();">U</button>
-          <button onclick="cube = moveCube(cube, &quot;U'&quot;); refreshCube();">U'</button>
-      </div>
-      <div class='rb-faceline'>
-          <div class='rb-face'>
-              <button onclick="cube = moveCube(cube, 'L'); refreshCube();">L</button>
-              <button onclick="cube = moveCube(cube, &quot;L'&quot;); refreshCube();">L'</button>
-          </div>
-          <div class='rb-face'>
-              <button onclick="cube = moveCube(cube, 'F'); refreshCube();">F</button>
-              <button onclick="cube = moveCube(cube, &quot;F'&quot;); refreshCube();">F'</button>
-          </div>
-          <div class='rb-face'>
-              <button onclick="cube = moveCube(cube, 'R'); refreshCube();">R</button>
-              <button onclick="cube = moveCube(cube, &quot;R'&quot;); refreshCube();">R'</button>
-          </div>
-          <div class='rb-face'>
-              <button onclick="cube = moveCube(cube, 'B'); refreshCube();">B</button>
-              <button onclick="cube = moveCube(cube, &quot;B'&quot;); refreshCube();">B'</button><br>
-          </div>
-      </div>
-      <div class='rb-face'></div>
-      <div class='rb-face'>
-          <button onclick="cube = moveCube(cube, 'D'); refreshCube();">D</button>
-          <button onclick="cube = moveCube(cube, &quot;D'&quot;); refreshCube();">D'</button>
-      </div>
-  </div>
+  <div id='moves' class="rb-moves"></div>
 
 <script src="js/rubik.js"></script>
 <script src="js/scripts.js"></script>
-
-
 
 </body>
 </html>
