@@ -158,13 +158,11 @@ function printFace(face, colors) {
 
 
 function printCube(mycube, colors) {
-    var div = "<div class='cube'>\n";
-    div += "<div class='face-decal'>" + printFace(getFace(mycube, 'U'), colors) + "</div>\n"
+    var div = "<div class='face-decal'>" + printFace(getFace(mycube, 'U'), colors) + "</div>\n"
     div += "<div class='face-inline'>" + printFace(getFace(mycube, 'L'), colors) + "</div>\n"
     div += "<div class='face-inline'>" + printFace(getFace(mycube, 'F'), colors) + "</div>\n"
     div += "<div class='face-inline'>" + printFace(getFace(mycube, 'R'), colors) + "</div>\n"
     div += "<div class='face-inline'>" + printFace(getFace(mycube, 'B'), colors) + "</div>\n"
-    div += "<div class='face-decal'>" + printFace(getFace(mycube, 'D'), colors) + "</div>\n"
-    div += "</div>\n";
+    div += "<div class='face-decal'>" + printFace(getFace(mycube, 'D'), colors) + "</div>"
     return div;
 }

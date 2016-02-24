@@ -1,36 +1,38 @@
 .cube
 {
-    width: 482px;
+    width: 480px;
     margin-left: auto;
     margin-right: auto;
+    background-color: black;
+    padding: 15px;
+    border-radius: 15px;
+    -moz-border-radius:15px;
+    -webkit-border-radius:15px;
 }
 
 .face-decal
 {
+    width: 480px;
     margin-left: 121px;
-    margin-bottom: 1px;
-    margin-top: 1px;
+    margin-bottom: 4px;
 }
 
 .face-inline
 {
     display: inline-block;
-    margin-right: -4px;
-    margin-bottom: -4px;
 }
 
 .face
 {
-    border-spacing: 0px;
+    border-spacing: 5px;
 }
 
 .face td
 {
-    height: 34px;
-    width: 34px;
-    border: black solid 3px;
-    padding: 0px;
-    border-radius:3px;
-    -moz-border-radius:3px;
-    -webkit-border-radius:3px;
+    height: 30px;
+    width: 30px;
+    border: 0px;
+    border-radius:4px;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
 }
