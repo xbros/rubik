@@ -1,38 +1,32 @@
-.cube
+
+.rb-cube, .rb-moves, .rb-settings
 {
     width: 480px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
     background-color: black;
     padding: 15px;
+    padding-right: 8px;
     border-radius: 15px;
     -moz-border-radius:15px;
     -webkit-border-radius:15px;
 }
 
-.face-decal
-{
-    width: 480px;
-    margin-left: 121px;
-    margin-bottom: 4px;
-}
-
-.face-inline
+.rb-face
 {
     display: inline-block;
+    width: 25%;
+    text-align: center;
+    margin-right: -4px;
+    border-collapse: collapse;
+    border-spacing: 0px;
 }
 
-.face
+.rb-face td
 {
-    border-spacing: 5px;
-}
-
-.face td
-{
-    height: 30px;
-    width: 30px;
-    border: 0px;
-    border-radius:4px;
-    -moz-border-radius:4px;
-    -webkit-border-radius:4px;
+    height: 31px;
+    width: 31px;
+    border: 7px black solid;
 }

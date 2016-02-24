@@ -144,25 +144,76 @@ function getFace(cube, name) {
 
 
 function printFace(face, colors) {
-    var table = "<table class='face'>";
+    var table = "<table class='rb-face'>\n";
     for(var i = 0; i < face.length; i++) {
         table += "<tr>";
         for(var j = 0; j < face[i].length; j++) {
-            table += "<td style=\"background-color: " + colors[face[i][j]] + ";\"></td>"
+            table += "<td style=\"background-color: " + colors[face[i][j]] + ";\">" + "" + "</td>"
         }
-        table += "</tr>";
+        table += "</tr>\n";
     }
     table += "</table>";
     return table;
 }
 
 
-function printCube(mycube, colors) {
-    var div = "<div class='face-decal'>" + printFace(getFace(mycube, 'U'), colors) + "</div>\n"
-    div += "<div class='face-inline'>" + printFace(getFace(mycube, 'L'), colors) + "</div>\n"
-    div += "<div class='face-inline'>" + printFace(getFace(mycube, 'F'), colors) + "</div>\n"
-    div += "<div class='face-inline'>" + printFace(getFace(mycube, 'R'), colors) + "</div>\n"
-    div += "<div class='face-inline'>" + printFace(getFace(mycube, 'B'), colors) + "</div>\n"
-    div += "<div class='face-decal'>" + printFace(getFace(mycube, 'D'), colors) + "</div>"
-    return div;
+function printCube(cube, colors) {
+    var out = "<div><div class='rb-face'></div>" + printFace(getFace(cube, 'U'), colors) + "</div>";
+    out += "<div>";
+    out += printFace(getFace(cube, 'L'), colors);
+    out += printFace(getFace(cube, 'F'), colors);
+    out += printFace(getFace(cube, 'R'), colors);
+    out += printFace(getFace(cube, 'B'), colors);
+    out += "</div>";
+    out += "<div><div class='rb-face'></div>" + printFace(getFace(cube, 'D'), colors) + "</div>";
+    return out;
+}
+
+
+function moveCube(cube, move) {
+    var n = cube.length;
+    switch(move) {
+        case "B":
+            return flipCube(cube, 0, 0, false);
+        case "B'":
+            return flipCube(cube, 0, 0, true);
+        case "F":
+            return flipCube(cube, 0, n-1, true);
+        case "F'":
+            return flipCube(cube, 0, n-1, false);
+        case "L":
+            return flipCube(cube, 1, 0, false);
+        case "L'":
+            return flipCube(cube, 1, 0, true);
+        case "R":
+            return flipCube(cube, 1, n-1, true);
+        case "R'":
+            return flipCube(cube, 1, n-1, false);
+        case "D":
+            return flipCube(cube, 2, 0, false);
+        case "D'":
+            return flipCube(cube, 2, 0, true);
+        case "U":
+            return flipCube(cube, 2, n-1, true);
+        case "U'":
+            return flipCube(cube, 2, n-1, false);
+    }
+}
+
+
+function randomMove() {
+    var moves = ["B", "B'", "F", "F'", "L", "L'", "R", "R'", "D", "D'", "U", "U'"];
+    var ind = Math.floor(Math.random() * moves.length);
+    return moves[ind];
+}
+
+
+function shuffleCube(cube, n, moves) {
+    var shuffled = cloneCube(cube);
+    moves = Array(n);
+    for (var i=0; i<n; i++) {
+        moves[i] = randomMove();
+        shuffled = moveCube(shuffled, moves[i]);
+    }
+    return shuffled;
 }
