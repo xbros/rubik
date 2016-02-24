@@ -60,7 +60,7 @@ function flipPiece(piece, axis) {
     }
 }
 
-function flipCube(cube, axis, coord, clockwise) {
+function flipCube(cube, axis, slice, clockwise) {
     var flipped = cloneCube(cube);
     var n = cube.length;
     if (typeof(clockwise)=='undefined')
@@ -71,21 +71,21 @@ function flipCube(cube, axis, coord, clockwise) {
             switch(axis) {
                 case 0:
                     if (clockwise)
-                        flipped[coord][j][-i+n-1] = flipPiece(cube[coord][i][j], axis);
+                        flipped[slice][j][-i+n-1] = flipPiece(cube[slice][i][j], axis);
                     else
-                        flipped[coord][-j+n-1][i] = flipPiece(cube[coord][i][j], axis);
+                        flipped[slice][-j+n-1][i] = flipPiece(cube[slice][i][j], axis);
                     break;
                 case 1:
                     if (clockwise)
-                        flipped[-j+n-1][coord][i] = flipPiece(cube[i][coord][j], axis);
+                        flipped[-j+n-1][slice][i] = flipPiece(cube[i][slice][j], axis);
                     else
-                        flipped[j][coord][-i+n-1] = flipPiece(cube[i][coord][j], axis);
+                        flipped[j][slice][-i+n-1] = flipPiece(cube[i][slice][j], axis);
                     break;
                 case 2:
                     if (clockwise)
-                        flipped[j][-i+n-1][coord] = flipPiece(cube[i][j][coord], axis);
+                        flipped[j][-i+n-1][slice] = flipPiece(cube[i][j][slice], axis);
                     else
-                        flipped[-j+n-1][i][coord] = flipPiece(cube[i][j][coord], axis);
+                        flipped[-j+n-1][i][slice] = flipPiece(cube[i][j][slice], axis);
                     break;
             }
         }
@@ -94,10 +94,10 @@ function flipCube(cube, axis, coord, clockwise) {
 }
 
 
-function flipNCube(cube, axis, coord, clockwise, n) {
+function flipNCube(cube, axis, slice, clockwise, n) {
     var flipped = cloneCube(cube);
     for (var i=0; i<n; i++) {
-        flipped = flipCube(flipped, axis, coord, clockwise);
+        flipped = flipCube(flipped, axis, slice, clockwise);
     }
     return flipped;
 }
