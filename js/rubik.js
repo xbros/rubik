@@ -364,7 +364,33 @@ var Cube = (function() {
        return ".refresh(&quot;" + ids.cube + "&quot;, &quot;" + ids.moves + "&quot;)";
     }
 
-    Cube.settingsHTML = function(varname, ids) {
+
+    Cube.faceCtrlHTML = function(move, varname, ids) {
+        ids = ids || Cube.ids();
+        var out = "<div class='rb-face'>";
+        out += "<button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "&quot;)" + refresh_str(ids) + ";'><i class='fa fa-rotate-right'></i> " + move + "</button>";
+        out += "<button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "&apos;&quot;)" + refresh_str(ids) + ";'><i class='fa fa-rotate-left'></i> " + move + "&apos;</button>";
+        out += "<button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "2&quot;)" + refresh_str(ids) + ";'><i class='fa fa-refresh'></i> " + move + "2</button>";
+        return out += "</div>";
+    };
+
+    Cube.movesCtrlHTML = function(varname, ids) {
+        ids = ids || Cube.ids();
+        var out = "<div class='rb-controls-row'><div class='rb-face'></div>";
+        out += Cube.faceCtrlHTML('U', varname, ids);
+        out += "<div class='rb-face'></div><div class='rb-face'></div></div>";
+        out += "<div class='rb-controls-row'>";
+        out += Cube.faceCtrlHTML('L', varname, ids);
+        out += Cube.faceCtrlHTML('F', varname, ids);
+        out += Cube.faceCtrlHTML('R', varname, ids);
+        out += Cube.faceCtrlHTML('B', varname, ids);
+        out += "</div>";
+        out += "<div class='rb-controls-row'><div class='rb-face'></div>";
+        out += Cube.faceCtrlHTML('D', varname, ids);
+        return out += "<div class='rb-face'></div><div class='rb-face'></div></div>";
+    };
+
+    Cube.playbackCtrlHTML = function(varname, ids) {
         ids = ids || Cube.ids();
         var out = "<div class='rb-face'>";
         out += "<button class='rb-btn' onclick='" + varname + ".reset()" + refresh_str(ids) + ";'><i class='fa fa-fast-backward'></i> Reset</button>";
@@ -380,32 +406,7 @@ var Cube = (function() {
         return out += "</div>";
     };
 
-    Cube.moveFaceHTML = function(move, varname, ids) {
-        ids = ids || Cube.ids();
-        var out = "<div class='rb-face'>";
-        out += "<button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "&quot;)" + refresh_str(ids) + ";'><i class='fa fa-rotate-right'></i> " + move + "</button>";
-        out += "<button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "&apos;&quot;)" + refresh_str(ids) + ";'><i class='fa fa-rotate-left'></i> " + move + "&apos;</button>";
-        out += "<button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "2&quot;)" + refresh_str(ids) + ";'><i class='fa fa-refresh'></i> " + move + "2</button>";
-        return out += "</div>";
-    };
-
-    Cube.movesHTML = function(varname, ids) {
-        ids = ids || Cube.ids();
-        var out = "<div class='rb-controls-row'><div class='rb-face'></div>";
-        out += Cube.moveFaceHTML('U', varname, ids);
-        out += "<div class='rb-face'></div><div class='rb-face'></div></div>";
-        out += "<div class='rb-controls-row'>";
-        out += Cube.moveFaceHTML('L', varname, ids);
-        out += Cube.moveFaceHTML('F', varname, ids);
-        out += Cube.moveFaceHTML('R', varname, ids);
-        out += Cube.moveFaceHTML('B', varname, ids);
-        out += "</div>";
-        out += "<div class='rb-controls-row'><div class='rb-face'></div>";
-        out += Cube.moveFaceHTML('D', varname, ids);
-        return out += "<div class='rb-face'></div><div class='rb-face'></div></div>";
-    };
-
-    Cube.strmovHTML = function(varname, ids) {
+    Cube.strPlayCtrlHTML = function(varname, ids) {
         ids = ids || Cube.ids();
         var out = "<input class='rb-input-str' id='" + ids.strmov + "' type='text' name='" + ids.strmov + "'>";
         out += "<div class='rb-face'>";
@@ -419,13 +420,13 @@ var Cube = (function() {
     Cube.controlsHTML = function(varname, ids) {
         ids = ids || Cube.ids();
         var out = "<div class='rb-controls-row'>";
-        out += Cube.settingsHTML(varname, ids);
+        out += Cube.movesCtrlHTML(varname, ids);
         out += "</div>";
         out += "<div class='rb-controls-row'>";
-        out += Cube.movesHTML(varname, ids);
+        out += Cube.playbackCtrlHTML(varname, ids);
         out += "</div>";
         out += "<div class='rb-controls-row'>";
-        out += Cube.strmovHTML(varname, ids);
+        out += Cube.strPlayCtrlHTML(varname, ids);
         return out += "</div>"
     };
 
