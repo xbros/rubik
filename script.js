@@ -8,4 +8,4 @@ var cube = new Cube(n);
 var varname = 'cube'
 var ids = Cube.ids('cube', 'moves', 'nshuf', 'strmov');
 cube.refresh(ids);
-document.getElementById('controls').innerHTML = Cube.controlsHTML(varname, ids);
+document.getElementById('controls').innerHTML = Cube.movesCtrlHTML(varname, ids) + Cube.playCtrlHTML(varname, ids);

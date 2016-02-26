@@ -364,35 +364,35 @@ var Cube = (function() {
        return ".refresh(&quot;" + ids.cube + "&quot;, &quot;" + ids.moves + "&quot;)";
     }
 
-
-    Cube.faceCtrlHTML = function(move, varname, ids) {
+    Cube.faceMoveCtrlHTML = function(move, varname, ids) {
         ids = ids || Cube.ids();
         var out = "<div class='rb-face'>";
         out += "<button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "&quot;)" + refresh_str(ids) + ";'><i class='fa fa-rotate-right'></i> " + move + "</button>";
         out += "<button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "&apos;&quot;)" + refresh_str(ids) + ";'><i class='fa fa-rotate-left'></i> " + move + "&apos;</button>";
-        out += "<button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "2&quot;)" + refresh_str(ids) + ";'><i class='fa fa-refresh'></i> " + move + "2</button>";
+        out += "<br><button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "2&quot;)" + refresh_str(ids) + ";'><i class='fa fa-refresh'></i> " + move + "2</button>";
         return out += "</div>";
     };
 
     Cube.movesCtrlHTML = function(varname, ids) {
         ids = ids || Cube.ids();
         var out = "<div class='rb-controls-row'><div class='rb-face'></div>";
-        out += Cube.faceCtrlHTML('U', varname, ids);
+        out += Cube.faceMoveCtrlHTML('U', varname, ids);
         out += "<div class='rb-face'></div><div class='rb-face'></div></div>";
         out += "<div class='rb-controls-row'>";
-        out += Cube.faceCtrlHTML('L', varname, ids);
-        out += Cube.faceCtrlHTML('F', varname, ids);
-        out += Cube.faceCtrlHTML('R', varname, ids);
-        out += Cube.faceCtrlHTML('B', varname, ids);
+        out += Cube.faceMoveCtrlHTML('L', varname, ids);
+        out += Cube.faceMoveCtrlHTML('F', varname, ids);
+        out += Cube.faceMoveCtrlHTML('R', varname, ids);
+        out += Cube.faceMoveCtrlHTML('B', varname, ids);
         out += "</div>";
         out += "<div class='rb-controls-row'><div class='rb-face'></div>";
-        out += Cube.faceCtrlHTML('D', varname, ids);
+        out += CubefaceMoveCtrlHTML('D', varname, ids);
         return out += "<div class='rb-face'></div><div class='rb-face'></div></div>";
     };
 
-    Cube.playbackCtrlHTML = function(varname, ids) {
+    Cube.playCtrlHTML = function(varname, ids) {
         ids = ids || Cube.ids();
-        var out = "<div class='rb-face'>";
+        var out += "<div class='rb-controls-row'>";
+        out += "<div class='rb-face'>";
         out += "<button class='rb-btn' onclick='" + varname + ".reset()" + refresh_str(ids) + ";'><i class='fa fa-fast-backward'></i> Reset</button>";
         out += "</div>";
         out += "<div class='rb-face'>";
@@ -402,34 +402,18 @@ var Cube = (function() {
         out += "<button class='rb-btn' onclick='" + varname + ".shuffle(document.getElementById(&quot;" + ids.nshuf + "&quot;).value)" + refresh_str(ids) + ";'><i class='fa fa-random'></i> Shuffle</button>";
         out += "</div>";
         out += "<div class='rb-face'>";
-        out += "<input class='rb-input-num' id='" + ids.nshuf +"' name='" + ids.nshuf + "' type='number' value='20' min='1' max='40' class='rb-btn'></input>"
-        return out += "</div>";
-    };
-
-    Cube.strPlayCtrlHTML = function(varname, ids) {
-        ids = ids || Cube.ids();
-        var out = "<input class='rb-input-str' id='" + ids.strmov + "' type='text' name='" + ids.strmov + "'>";
+        out += "<input class='rb-input-num' id='" + ids.nshuf +"' name='" + ids.nshuf + "' type='number' value='20' min='1' max='40' class='rb-btn'></input>";
+        out += "</div>";
+        out += "</div>";
+        out += "<div class='rb-controls-row'>";
+        out += "<input class='rb-input-str' id='" + ids.strmov + "' type='text' name='" + ids.strmov + "'>";
         out += "<div class='rb-face'>";
         out += "<button onclick='" + varname + ".move(document.getElementById(&quot;" + ids.strmov + "&quot;).value.trim().split(/ +/))" + refresh_str(ids) + ";'><i class='fa fa-play'></i> Play</button>";
         out += "</div>";
         out += "<div class='rb-face'>";
-        return out += "<button onclick='" + varname + ".moveInv(document.getElementById(&quot;" + ids.strmov + "&quot;).value.trim().split(/ +/))" + refresh_str(ids) + ";'><i class='fa fa-play fa-rotate-180'></i> Inverse</button>";
+        out += "<button onclick='" + varname + ".moveInv(document.getElementById(&quot;" + ids.strmov + "&quot;).value.trim().split(/ +/))" + refresh_str(ids) + ";'><i class='fa fa-play fa-rotate-180'></i> Inverse</button>";
         return out += "</div>";
     };
-
-    Cube.controlsHTML = function(varname, ids) {
-        ids = ids || Cube.ids();
-        var out = "<div class='rb-controls-row'>";
-        out += Cube.movesCtrlHTML(varname, ids);
-        out += "</div>";
-        out += "<div class='rb-controls-row'>";
-        out += Cube.playbackCtrlHTML(varname, ids);
-        out += "</div>";
-        out += "<div class='rb-controls-row'>";
-        out += Cube.strPlayCtrlHTML(varname, ids);
-        return out += "</div>"
-    };
-
 
     return Cube;
 })()

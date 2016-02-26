@@ -33,8 +33,9 @@
 }
 
 .rb-btn {
-    padding: 1px;
-    margin: -1px;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin: 0px;
 }
 
 .hide {
