@@ -1,5 +1,5 @@
 
-.rb-cube, .rb-controls, .rb-moves {
+.rb-cube, .rb-ctrl, .rb-moves {
     padding: 5px;
     word-wrap: break-word;
 }
@@ -12,7 +12,7 @@
     width: 200px;
 }
 
-.rb-controls-row {
+.rb-ctrl-row {
     margin-top: 5px;
     margin-bottom: 5px;
 }

@@ -347,16 +347,16 @@ var Cube = (function() {
         return out += "</table>";
     };
 
-    Cube.ids = function(cube, moves, nshuf, strmov) {
-        cube = cube || 'cube';
-        moves = moves || 'moves';
-        nshuf = nshuf || 'nshuf';
-        strmov = strmov || 'strmov';
+    Cube.ids = function(cube, moves, nshuf, txtmov) {
+        cube = cube || 'rb-cube';
+        moves = moves || 'rb-moves';
+        nshuf = nshuf || 'rb-nshuf';
+        txtmov = txtmov || 'rb-txtmov';
         return {
             cube: cube,
             moves: moves,
             nshuf: nshuf,
-            strmov: strmov
+            txtmov: txtmov
         }
     };
 
@@ -375,23 +375,25 @@ var Cube = (function() {
 
     Cube.movesCtrlHTML = function(varname, ids) {
         ids = ids || Cube.ids();
-        var out = "<div class='rb-controls-row'><div class='rb-face'></div>";
+
+        var out = "<div class='rb-ctrl-row'><div class='rb-face'></div>";
         out += Cube.faceMoveCtrlHTML('U', varname, ids);
         out += "<div class='rb-face'></div><div class='rb-face'></div></div>";
-        out += "<div class='rb-controls-row'>";
+        out += "<div class='rb-ctrl-row'>";
         out += Cube.faceMoveCtrlHTML('L', varname, ids);
         out += Cube.faceMoveCtrlHTML('F', varname, ids);
         out += Cube.faceMoveCtrlHTML('R', varname, ids);
         out += Cube.faceMoveCtrlHTML('B', varname, ids);
         out += "</div>";
-        out += "<div class='rb-controls-row'><div class='rb-face'></div>";
-        out += CubefaceMoveCtrlHTML('D', varname, ids);
+        out += "<div class='rb-ctrl-row'><div class='rb-face'></div>";
+        out += Cube.faceMoveCtrlHTML('D', varname, ids);
         return out += "<div class='rb-face'></div><div class='rb-face'></div></div>";
     };
 
     Cube.playCtrlHTML = function(varname, ids) {
         ids = ids || Cube.ids();
-        var out += "<div class='rb-controls-row'>";
+
+        var out = "<div class='rb-ctrl-row'>";
         out += "<div class='rb-face'>";
         out += "<button class='rb-btn' onclick='" + varname + ".reset()" + refresh_str(ids) + ";'><i class='fa fa-fast-backward'></i> Reset</button>";
         out += "</div>";
@@ -405,13 +407,15 @@ var Cube = (function() {
         out += "<input class='rb-input-num' id='" + ids.nshuf +"' name='" + ids.nshuf + "' type='number' value='20' min='1' max='40' class='rb-btn'></input>";
         out += "</div>";
         out += "</div>";
-        out += "<div class='rb-controls-row'>";
-        out += "<input class='rb-input-str' id='" + ids.strmov + "' type='text' name='" + ids.strmov + "'>";
+
+        out += "<div class='rb-ctrl-row'>";
+        out += "<input class='rb-input-str' id='" + ids.txtmov + "' type='text' name='" + ids.txtmov + "'>";
         out += "<div class='rb-face'>";
-        out += "<button onclick='" + varname + ".move(document.getElementById(&quot;" + ids.strmov + "&quot;).value.trim().split(/ +/))" + refresh_str(ids) + ";'><i class='fa fa-play'></i> Play</button>";
+        out += "<button onclick='" + varname + ".move(document.getElementById(&quot;" + ids.txtmov + "&quot;).value.trim().split(/ +/))" + refresh_str(ids) + ";'><i class='fa fa-play'></i> Play</button>";
         out += "</div>";
         out += "<div class='rb-face'>";
-        out += "<button onclick='" + varname + ".moveInv(document.getElementById(&quot;" + ids.strmov + "&quot;).value.trim().split(/ +/))" + refresh_str(ids) + ";'><i class='fa fa-play fa-rotate-180'></i> Inverse</button>";
+        out += "<button onclick='" + varname + ".moveInv(document.getElementById(&quot;" + ids.txtmov + "&quot;).value.trim().split(/ +/))" + refresh_str(ids) + ";'><i class='fa fa-play fa-rotate-180'></i> Inverse</button>";
+        out += "</div>";
         return out += "</div>";
     };
 
