@@ -29,6 +29,26 @@ var Cube = (function() {
       "U2": 17
     };
     var _inverse = [1, 0, 2, 4, 3, 5, 7, 6, 8, 10, 9, 11, 13, 12, 14, 16, 15, 17];
+    var _moveFuns = {
+          "B": function(cube) { return rotate(cube, 0, 0, false); },
+          "B'": function(cube) { return rotate(cube, 0, 0, true); },
+          "B2": function(cube) { return rotateN(cube, 0, 0, true, 2); },
+          "F": function(cube) { return rotate(cube, 0, n-1, true); },
+          "F'": function(cube) { return rotate(cube, 0, n-1, false); },
+          "F2": function(cube) { return rotateN(cube, 0, n-1, false, 2); },
+          "L": function(cube) { return rotate(cube, 1, 0, false); },
+          "L'": function(cube) { return rotate(cube, 1, 0, true); },
+          "L2": function(cube) { return rotateN(cube, 1, 0, true, 2); },
+          "R": function(cube) { return rotate(cube, 1, n-1, true); },
+          "R'": function(cube) { return rotate(cube, 1, n-1, false); },
+          "R2": function(cube) { return rotateN(cube, 1, n-1, false, 2); },
+          "D": function(cube) { return rotate(cube, 2, 0, false); },
+          "D'": function(cube) { return rotate(cube, 2, 0, true); },
+          "D2": function(cube) { return rotateN(cube, 2, 0, true, 2); },
+          "U": function(cube) { return rotate(cube, 2, n-1, true); },
+          "U'": function(cube) { return rotate(cube, 2, n-1, false); },
+          "U2": function(cube) { return rotateN(cube, 2, n-1, false, 2); }
+    }
 
     function _Piece(other) {
         other = other || [undefined, undefined, undefined];
@@ -148,43 +168,43 @@ var Cube = (function() {
         return clone.init(this);
     };
 
-    Cube.prototype.rotate = function(axis, slice, clockwise) {
-        var n = this.n;
+    function rotate(cube, axis, slice, clockwise) {
+        var n = cube.n;
         if (typeof(clockwise)=='undefined')
             clockwise = true;
 
-        this.bufferize();
+        cube.bufferize();
         for (var i=0; i<n; i++) {
             for (var j=0; j<n; j++) {
                 switch(axis) {
                     case 0:
                         if (clockwise)
-                            this.buffer[slice][j][-i+n-1].init(this.state[slice][i][j]).rotate(axis);
+                            cube.buffer[slice][j][-i+n-1].init(cube.state[slice][i][j]).rotate(axis);
                         else
-                            this.buffer[slice][-j+n-1][i].init(this.state[slice][i][j]).rotate(axis);
+                            cube.buffer[slice][-j+n-1][i].init(cube.state[slice][i][j]).rotate(axis);
                         break;
                     case 1:
                         if (clockwise)
-                            this.buffer[-j+n-1][slice][i].init(this.state[i][slice][j]).rotate(axis);
+                            cube.buffer[-j+n-1][slice][i].init(cube.state[i][slice][j]).rotate(axis);
                         else
-                            this.buffer[j][slice][-i+n-1].init(this.state[i][slice][j]).rotate(axis);
+                            cube.buffer[j][slice][-i+n-1].init(cube.state[i][slice][j]).rotate(axis);
                         break;
                     case 2:
                         if (clockwise)
-                            this.buffer[j][-i+n-1][slice].init(this.state[i][j][slice]).rotate(axis);
+                            cube.buffer[j][-i+n-1][slice].init(cube.state[i][j][slice]).rotate(axis);
                         else
-                            this.buffer[-j+n-1][i][slice].init(this.state[i][j][slice]).rotate(axis);
+                            cube.buffer[-j+n-1][i][slice].init(cube.state[i][j][slice]).rotate(axis);
                         break;
                 }
             }
         }
-        return this.swap();
+        return cube.swap();
     };
 
-    Cube.prototype.rotateN = function(axis, slice, clockwise, n) {
+    function rotateN(cube, axis, slice, clockwise, n) {
         for (var i=0; i<n; i++)
-            this.rotate(axis, slice, clockwise);
-        return this;
+            rotate(cube, axis, slice, clockwise);
+        return cube;
     };
 
     Cube.prototype.move = function(moves) {
@@ -194,50 +214,14 @@ var Cube = (function() {
         if (typeof(moves)=='string')
             moves = [moves];
 
+        var moveFun;
         for (var i = 0; i<moves.length; i++) {
             if (!moves[i])
                 continue;
-            switch(moves[i]) {
-                case "B":
-                    this.rotate(0, 0, false); break;
-                case "B'":
-                    this.rotate(0, 0, true); break;
-                case "B2":
-                    this.rotateN(0, 0, true, 2); break;
-                case "F":
-                    this.rotate(0, n-1, true); break;
-                case "F'":
-                    this.rotate(0, n-1, false); break;
-                case "F2":
-                    this.rotateN(0, n-1, false, 2); break;
-                case "L":
-                    this.rotate(1, 0, false); break;
-                case "L'":
-                    this.rotate(1, 0, true); break;
-                case "L2":
-                    this.rotateN(1, 0, true, 2); break;
-                case "R":
-                    this.rotate(1, n-1, true); break;
-                case "R'":
-                    this.rotate(1, n-1, false); break;
-                case "R2":
-                    this.rotateN(1, n-1, false, 2); break;
-                case "D":
-                    this.rotate(2, 0, false); break;
-                case "D'":
-                    this.rotate(2, 0, true); break;
-                case "D2":
-                    this.rotateN(2, 0, true, 2); break;
-                case "U":
-                    this.rotate(2, n-1, true); break;
-                case "U'":
-                    this.rotate(2, n-1, false); break;
-                case "U2":
-                    this.rotateN(2, n-1, false, 2); break;
-                default:
-                    alert("Invalid move " + moves[i]);
-                    return;
-            }
+            moveFun = _moveFuns[moves[i]];
+            if (!moveFun)
+                alert('Invalid move ' + moves[i]);
+            moveFun(this);
             this.moves.push(moves[i]);
         }
         return this;
@@ -360,16 +344,16 @@ var Cube = (function() {
         }
     };
 
-    function refresh_str(ids) {
+    function refreshHTML(ids) {
        return ".refresh(&quot;" + ids.cube + "&quot;, &quot;" + ids.moves + "&quot;)";
     }
 
     Cube.faceMoveCtrlHTML = function(move, varname, ids) {
         ids = ids || Cube.ids();
         var out = "<div class='rb-face'>";
-        out += "<button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "&quot;)" + refresh_str(ids) + ";'><i class='fa fa-rotate-right'></i> " + move + "</button>";
-        out += "<button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "&apos;&quot;)" + refresh_str(ids) + ";'><i class='fa fa-rotate-left'></i> " + move + "&apos;</button>";
-        out += "<br><button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "2&quot;)" + refresh_str(ids) + ";'><i class='fa fa-refresh'></i> " + move + "2</button>";
+        out += "<button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "&quot;)" + refreshHTML(ids) + ";'><i class='fa fa-rotate-right'></i> " + move + "</button>";
+        out += "<button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "&apos;&quot;)" + refreshHTML(ids) + ";'><i class='fa fa-rotate-left'></i> " + move + "&apos;</button>";
+        out += "<br><button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "2&quot;)" + refreshHTML(ids) + ";'><i class='fa fa-refresh'></i> " + move + "2</button>";
         return out += "</div>";
     };
 
@@ -395,13 +379,13 @@ var Cube = (function() {
 
         var out = "<div class='rb-ctrl-row'>";
         out += "<div class='rb-face'>";
-        out += "<button class='rb-btn' onclick='" + varname + ".reset()" + refresh_str(ids) + ";'><i class='fa fa-fast-backward'></i> Reset</button>";
+        out += "<button class='rb-btn' onclick='" + varname + ".reset()" + refreshHTML(ids) + ";'><i class='fa fa-fast-backward'></i> Reset</button>";
         out += "</div>";
         out += "<div class='rb-face'>";
-        out += "<button class='rb-btn' onclick='" + varname + ".rewind()" + refresh_str(ids) + ";'><i class='fa fa-step-backward'></i> Back</button>";
+        out += "<button class='rb-btn' onclick='" + varname + ".rewind()" + refreshHTML(ids) + ";'><i class='fa fa-step-backward'></i> Back</button>";
         out += "</div>";
         out += "<div class='rb-face'>";
-        out += "<button class='rb-btn' onclick='" + varname + ".shuffle(document.getElementById(&quot;" + ids.nshuf + "&quot;).value)" + refresh_str(ids) + ";'><i class='fa fa-random'></i> Shuffle</button>";
+        out += "<button class='rb-btn' onclick='" + varname + ".shuffle(document.getElementById(&quot;" + ids.nshuf + "&quot;).value)" + refreshHTML(ids) + ";'><i class='fa fa-random'></i> Shuffle</button>";
         out += "</div>";
         out += "<div class='rb-face'>";
         out += "<input class='rb-input-num' id='" + ids.nshuf +"' name='" + ids.nshuf + "' type='number' value='20' min='1' max='40' class='rb-btn'></input>";
@@ -411,10 +395,10 @@ var Cube = (function() {
         out += "<div class='rb-ctrl-row'>";
         out += "<input class='rb-input-str' id='" + ids.txtmov + "' type='text' name='" + ids.txtmov + "'>";
         out += "<div class='rb-face'>";
-        out += "<button onclick='" + varname + ".move(document.getElementById(&quot;" + ids.txtmov + "&quot;).value.trim().split(/ +/))" + refresh_str(ids) + ";'><i class='fa fa-play'></i> Play</button>";
+        out += "<button onclick='" + varname + ".move(document.getElementById(&quot;" + ids.txtmov + "&quot;).value.trim().split(/ +/))" + refreshHTML(ids) + ";'><i class='fa fa-play'></i> Play</button>";
         out += "</div>";
         out += "<div class='rb-face'>";
-        out += "<button onclick='" + varname + ".moveInv(document.getElementById(&quot;" + ids.txtmov + "&quot;).value.trim().split(/ +/))" + refresh_str(ids) + ";'><i class='fa fa-play fa-rotate-180'></i> Inverse</button>";
+        out += "<button onclick='" + varname + ".moveInv(document.getElementById(&quot;" + ids.txtmov + "&quot;).value.trim().split(/ +/))" + refreshHTML(ids) + ";'><i class='fa fa-play fa-rotate-180'></i> Inverse</button>";
         out += "</div>";
         return out += "</div>";
     };
