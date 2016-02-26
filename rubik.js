@@ -308,7 +308,7 @@ var Cube = (function() {
         out += "</div>";
         out += "<div><div class='rb-face'></div>";
         out += Cube.faceHTML(this.face('D'), colors);
-        return out += "<div class='rb-face'><div class='rb-face'></div></div></div>";
+        return out += "<div class='rb-face'></div><div class='rb-face'></div></div>";
     };
 
     Cube.prototype.refresh = function(cubeId, movesId, colors) {
