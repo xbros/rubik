@@ -1,32 +1,42 @@
 
-.rb-cube, .rb-moves, .rb-settings
-{
-    width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    background-color: black;
-    padding: 15px;
-    padding-right: 8px;
-    border-radius: 15px;
-    -moz-border-radius:15px;
-    -webkit-border-radius:15px;
+.rb-cube, .rb-controls, .rb-moves {
+    padding: 5px;
+    word-wrap: break-word;
 }
 
-.rb-face
-{
+.rb-input-num {
+    width: 3em;
+}
+
+.rb-input-str {
+    width: 200px;
+}
+
+.rb-controls-row {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.rb-face {
     display: inline-block;
-    width: 25%;
+    width: 100px;
     text-align: center;
-    margin-right: -4px;
     border-collapse: collapse;
     border-spacing: 0px;
 }
 
-.rb-face td
-{
-    height: 31px;
-    width: 31px;
-    border: 7px black solid;
+.rb-face td {
+    height: 30px;
+    width: 30px;
+    border: 5px black solid;
+    padding: 0px;
+}
+
+.rb-btn {
+    padding: 1px;
+    margin: -1px;
+}
+
+.hide {
+    display: none;
 }

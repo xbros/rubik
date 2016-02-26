@@ -2,17 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Rukib's Cube</title>
+    <title>Rubik's cube</title>
+    <!---->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!---->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body style="background-color:black;">
+<body>
 
-  <div id='settings' class="rb-settings"></div>
-  <div id='cube' class="rb-cube"></div>
-  <div id='moves' class="rb-moves"></div>
+    <h1>Rubik's cube</h1>
+    <div id='cube' class="rb-cube"></div>
+    <div id='controls' class="rb-controls"></div>
+    <div class="rb-moves">
+        <button onclick="document.getElementById('moves').classList.toggle('hide')">Moves</button>
+        <p id='moves'></p>
+    </div>
 
-  <script src="js/rubik.js"></script>
-  <script src="js/scripts.js"></script>
-
+    <script src="js/rubik.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
