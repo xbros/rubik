@@ -4,8 +4,8 @@
  */
 
 var n = 3;
-var cube = new Cube(n);
-var varname = 'cube'
-var ids = Cube.ids('rb-cube', 'rb-moves', 'rb-nshuf', 'rb-txtmov');
-cube.refresh(ids);
-document.getElementById('rb-ctrl').innerHTML = Cube.movesCtrlHTML(varname, ids) + Cube.playCtrlHTML(varname, ids);
+var myCube = new Cube(n);
+var varname = 'myCube'
+var ids = Cube.ids('my-cube', 'my-moves', 'my-nshuf', 'my-txtmov');
+myCube.refresh(ids);
+document.getElementById('my-ctrl').innerHTML = Cube.movesCtrlHTML(varname, ids) + Cube.playCtrlHTML(varname, ids);
