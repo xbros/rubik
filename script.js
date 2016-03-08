@@ -30,4 +30,4 @@ document.addEventListener('keydown', function(e) {
         myCube.move(key).refresh('my-cube', 'my-moves');
     }
     return false;
-});
+}, false);

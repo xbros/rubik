@@ -348,8 +348,8 @@ var Cube = (function() {
     Cube.faceMoveCtrlHTML = function(move, varname, ids) {
         ids = ids || Cube.ids();
         var out = "<div class='rb-face'>";
-        out += "<button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "&quot;)" + _refreshHTML(ids) + ";'><i class='fa fa-_rotate-right'></i> " + move + "</button>";
-        out += "<button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "&apos;&quot;)" + _refreshHTML(ids) + ";'><i class='fa fa-_rotate-left'></i> " + move + "&apos;</button>";
+        out += "<button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "&quot;)" + _refreshHTML(ids) + ";'><i class='fa fa-rotate-right'></i> " + move + "</button>";
+        out += "<button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "&apos;&quot;)" + _refreshHTML(ids) + ";'><i class='fa fa-rotate-left'></i> " + move + "&apos;</button>";
         out += "<br><button class='rb-btn' onclick='" + varname + ".move(&quot;" + move + "2&quot;)" + _refreshHTML(ids) + ";'><i class='fa fa-refresh'></i> " + move + "2</button>";
         return out += "</div>";
     };
